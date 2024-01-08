@@ -1,12 +1,16 @@
 <script setup>
 import { computed, watch } from 'vue';
+import demo from '../demo.js';
+
 
 const props = defineProps({
     fields: {
         type: Object,
         required: true,
     }
-})
+});
+
+const url = demo;
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';
@@ -48,11 +52,13 @@ Object.entries(props.fields).forEach(([groupKey, group]) => {
         });
     });
 });
-
+console.log(demo)
+console.log(url)
 </script>
 
 <template>
-    <iframe src="/proxy"></iframe>
+    <!-- <iframe src="/proxy"></iframe> -->
+    <iframe :src="demo"></iframe>
 </template>
 
 <style scoped>
