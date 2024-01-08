@@ -10,7 +10,7 @@ const props = defineProps({
     }
 });
 
-const url = demo;
+const url = 'http://localhost:3000/proxy?targetUrl=' + demo;
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';
@@ -25,8 +25,6 @@ const stylesWithChanges = computed(() => {
 }`;
     return str
 });
-console.log(props.fields)
-
 const sendMessage = (message) => {
     const iframe = document.querySelector('iframe').contentWindow;
     iframe.postMessage(message, "http://localhost:5173/");
@@ -52,13 +50,13 @@ Object.entries(props.fields).forEach(([groupKey, group]) => {
         });
     });
 });
-console.log(demo)
+
 console.log(url)
 </script>
 
 <template>
     <!-- <iframe src="/proxy"></iframe> -->
-    <iframe :src="demo"></iframe>
+    <iframe :src="url"></iframe>
 </template>
 
 <style scoped>
