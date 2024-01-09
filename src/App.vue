@@ -44,7 +44,6 @@ const changeCurrent = (page) => {
 //Nav Toggle
 const navExpanded = ref(true);
 const toggleNav = () => {
-  console.log(navExpanded.value)
   navExpanded.value = !navExpanded.value;
 }
 
@@ -76,7 +75,7 @@ const pagesToRender = computed(() => {
 </template>
 
 <style>
-#installation {
+#installation-app {
   max-height: 100vh;
 }
 .side-navigation-wrapper * {

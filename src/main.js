@@ -3,4 +3,4 @@ import './assets/styles.css';
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#installation')
+createApp(App).mount('#installation-app')

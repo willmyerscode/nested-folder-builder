@@ -53,7 +53,7 @@ p {
     margin: 0;
 }
 
-#installation p.link {
+#installation-app p.link {
     color: white;
     font-size: 18px;
     font-weight: 400;
@@ -73,12 +73,12 @@ p.link a:hover {
     color: white;
 }
 
-#installation p.link.active a {
+#installation-app p.link.active a {
     color: var(--blue);
 }
 
 
-#installation h1 {
+#installation-app h1 {
     font-size: 1rem;
     font-weight: 400;
     line-height: 26px;

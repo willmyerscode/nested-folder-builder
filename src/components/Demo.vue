@@ -10,7 +10,7 @@ const props = defineProps({
     }
 });
 
-const url = 'http://localhost:3000/proxy?targetUrl=' + demo;
+const url = 'https://wm-proxy.vercel.app/proxy?targetUrl=' + demo;
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';
@@ -27,7 +27,10 @@ const stylesWithChanges = computed(() => {
 });
 const sendMessage = (message) => {
     const iframe = document.querySelector('iframe').contentWindow;
-    iframe.postMessage(message, "http://localhost:5173/");
+    console.log(message)
+    //console.log('demo: ', demo)
+    iframe.postMessage(message, 'https://wm-proxy.vercel.app');
+    //frame.postMessage(message, "https://woof.willmyerscode.com");
 }
 
 // Watch each field for changes
@@ -50,12 +53,9 @@ Object.entries(props.fields).forEach(([groupKey, group]) => {
         });
     });
 });
-
-console.log(url)
 </script>
 
 <template>
-    <!-- <iframe src="/proxy"></iframe> -->
     <iframe :src="url"></iframe>
 </template>
 

@@ -3,7 +3,7 @@ const navigation = {
   items: [
     {
       title: "Install",
-      page: "/nested-folders/installation",
+      page: "https://www.will-myers.com/nested-folders/installation",
     },
     {
       title: "Customize",
@@ -11,11 +11,11 @@ const navigation = {
     },
     {
       title: "Advanced",
-      page: "/nested-folders/advanced",
+      page: "https://www.will-myers.com/nested-folders/advanced",
     },
     {
       title: "Support",
-      page: "/nested-folders/support",
+      page: "https://www.will-myers.com/nested-folders/support",
     },
   ],
 };

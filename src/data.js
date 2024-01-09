@@ -20,8 +20,8 @@ const data = {
               id: instance.id,
             }
           } else {
-            const rule = `.header-nav .header-nav-item--folder:nth-child(3) .header-nav-folder-content,
-#header .header-nav .header-nav-item--folder:nth-child(3) .header-nav-item--nested-folder:first-of-type .nested-folder {
+            const rule = `.header-nav .header-nav-item--folder:nth-child(1) .header-nav-folder-content,
+#header .header-nav .header-nav-item--folder:nth-child(1) .header-nav-item--nested-folder:first-of-type .nested-folder {
   display: block;
   opacity: 1;
   pointer-events: auto;
