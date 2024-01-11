@@ -3,7 +3,7 @@ import { computed, onMounted, watch } from 'vue';
 import demo from '../demoPage.js';
 
 //const proxyUrl = 'http://localhost:3000';
-const proxyUrl = 'https://wm-proxy.vercel.app'
+const proxyUrl = 'https://proxy.will-myers.com'
 
 
 const props = defineProps({
