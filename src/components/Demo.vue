@@ -14,8 +14,6 @@ const props = defineProps({
 });
 
 const url = `${proxyUrl}/proxy?targetUrl=` + demo;
-console.log('demo: ', demo)
-console.log('url: ', url)
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';
