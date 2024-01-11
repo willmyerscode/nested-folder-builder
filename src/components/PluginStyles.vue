@@ -32,7 +32,7 @@ const stylesWithChanges = computed(() => {
                 <p>Place these styles into your <em style="color:white">Websites » Website Tools » Custom CSS</em> area.</p>
             </div>
             <div class="output">
-<pre><code class="language-css">.wm-blog-style-1 section { {{ stylesWithChanges }}
+<pre><code class="language-css">#header { {{ stylesWithChanges }}
 }</code></pre>
             </div>
         </div>

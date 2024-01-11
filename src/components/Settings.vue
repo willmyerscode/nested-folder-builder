@@ -76,7 +76,7 @@ const checkCondition = (condition, settings) => {
                 <FieldGroup :group="group" />
             </div>
         </div>
-        <PluginSettings class="plugin-settings" :fields="fields" />
+        <!--<PluginSettings class="plugin-settings" :fields="fields" />-->
         <PluginStyles class="plugin-styles" :fields="fields" />
     </div>
 </template>

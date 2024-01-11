@@ -1,6 +1,5 @@
 <script setup>
 import DemoWrapper from './DemoWrapper.vue';
-import { ref, onMounted, nextTick } from 'vue';
 
 const props = defineProps({
     src: {
@@ -13,61 +12,7 @@ const props = defineProps({
     }
 });
 
-const content = ref('');
-const isLoading = ref(true);
-const error = ref(null);
-
-async function fetchContent(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Failed to load page');
-        const text = await response.text();
-        return text;
-    } catch (err) {
-        console.error('Error fetching:', err);
-        error.value = err.message;
-    }
-}
-
-async function parseContent(text) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    return doc.querySelector('#sections');
-}
-
-function initSSFunctions() {
-    window.Squarespace?.globalInit(Y);
-    window.Squarespace?.initializeLayoutBlocks(Y, Y.one(section));
-    window.Squarespace?.initializeNativeVideo(Y, Y.one(section));
-    window.Squarespace?.initializePageContent(Y, Y.one(section));
-    window.dispatchEvent(new Event('wmSyntaxHighlight'))
-}
-
-onMounted(async () => {
-    // if (props.src == 'design') {
-    //     error.value = false;
-    //     isLoading.value = false;
-    //     return;
-    // }
-    // isLoading.value = true;
-    // const url = import.meta.env.DEV ? `/will-myers${props.src}` : props.src;
-    // const text = await fetchContent(url);
-    // const section = await parseContent(text);
-
-    // if (section) {
-    //     content.value = section.innerHTML;
-    //     isLoading.value = false;
-    //     await nextTick();
-    //     //initSSFunctions()
-    // } else {
-    //     isLoading.value = false;
-    //     error.value = '#sections not found';
-    // }
-    // isLoading.value = false;
-});
-
 const url = 'https://wm-proxy.vercel.app/proxy?targetUrl=' + props.src;
-console.log(url)
 </script>
 
 <template>

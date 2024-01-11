@@ -1,6 +1,9 @@
 <script setup>
-import { computed, watch } from 'vue';
-import demo from '../demo.js';
+import { computed, onMounted, watch } from 'vue';
+import demo from '../demoPage.js';
+
+//const proxyUrl = 'http://localhost:3000';
+const proxyUrl = 'https://wm-proxy.vercel.app'
 
 
 const props = defineProps({
@@ -10,7 +13,9 @@ const props = defineProps({
     }
 });
 
-const url = 'https://wm-proxy.vercel.app/proxy?targetUrl=' + demo;
+const url = `${proxyUrl}/proxy?targetUrl=` + demo;
+console.log('demo: ', demo)
+console.log('url: ', url)
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';
@@ -27,10 +32,7 @@ const stylesWithChanges = computed(() => {
 });
 const sendMessage = (message) => {
     const iframe = document.querySelector('iframe').contentWindow;
-    console.log(message)
-    //console.log('demo: ', demo)
-    iframe.postMessage(message, 'https://wm-proxy.vercel.app');
-    //frame.postMessage(message, "https://woof.willmyerscode.com");
+    iframe.postMessage(message, url);
 }
 
 // Watch each field for changes
@@ -53,10 +55,23 @@ Object.entries(props.fields).forEach(([groupKey, group]) => {
         });
     });
 });
+   
+const onLoadHandler = () => {
+    const details = `
+    
+    `;
+    const message = { 
+        type: 'executeScript', 
+        id: 'builder',
+        details:  details,
+    };
+    sendMessage(message);
+}
+
 </script>
 
 <template>
-    <iframe :src="url"></iframe>
+    <iframe :src="url" @load="onLoadHandler"></iframe>
 </template>
 
 <style scoped>
