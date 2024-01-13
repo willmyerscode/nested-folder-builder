@@ -8,15 +8,13 @@ const { demoPage, pluginStyles, pluginScript } = pluginUrls;
 
 const proxyUrl = proxyServerUrl;
 
-let pluginScriptUrl;
-let pluginStylesUrl;
-if (window.location.host.includes('localhost')) {
-    pluginScriptUrl = window.location.protocol + '//' + window.location.host + '/plugin/index.js'; // Update this to the correct path
-    pluginStylesUrl = window.location.protocol + '//' + window.location.host + '/plugin/styles.css'; // Update this to the correct path
-} else {
-    pluginScriptUrl = pluginScript + '?t=' + new Date().getTime();
-    pluginStylesUrl = pluginStyles+ '?t=' + new Date().getTime();
-}
+let pluginScriptUrl = pluginScript + '?t=' + new Date().getTime();
+let pluginStylesUrl = pluginStyles+ '?t=' + new Date().getTime();
+
+// if (window.location.host.includes('localhost')) {
+//     pluginScriptUrl = window.location.protocol + '//' + window.location.host + '/plugin/index.js'; // Update this to the correct path
+//     pluginStylesUrl = window.location.protocol + '//' + window.location.host + '/plugin/styles.css'; // Update this to the correct path
+// }
 
 const props = defineProps({
     fields: {
