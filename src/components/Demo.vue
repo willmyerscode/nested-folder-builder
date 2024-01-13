@@ -1,20 +1,22 @@
 <script setup>
-import { computed, onMounted, watch } from 'vue';
-import demo from '../demoPage.js';
+import { computed, watch } from 'vue';
+import pluginUrls from '../pluginUrls.js';
+import adminSettings from '../adminSettings';
 
-const proxyUrl = 'https://proxy.will-myers.com'
+const {proxyServerUrl, devProxyServerUrl} = adminSettings;
+const { demoPage, pluginStyles, pluginScript } = pluginUrls;
+
+const proxyUrl = proxyServerUrl;
+
 let pluginScriptUrl;
 let pluginStylesUrl;
 if (window.location.host.includes('localhost')) {
     pluginScriptUrl = window.location.protocol + '//' + window.location.host + '/plugin/index.js'; // Update this to the correct path
     pluginStylesUrl = window.location.protocol + '//' + window.location.host + '/plugin/styles.css'; // Update this to the correct path
 } else {
-    pluginScriptUrl = 'https://cdn.jsdelivr.net/gh/willmyerscode/nested-folders@1/nested-folders.min.js?t=' + new Date().getTime();
-    pluginStylesUrl = 'https://cdn.jsdelivr.net/gh/willmyerscode/nested-folders@1/nested-folders.min.css?t=' + new Date().getTime();
+    pluginScriptUrl = pluginScript + '?t=' + new Date().getTime();
+    pluginStylesUrl = pluginStyles+ '?t=' + new Date().getTime();
 }
-
-
-
 
 const props = defineProps({
     fields: {
@@ -23,7 +25,7 @@ const props = defineProps({
     }
 });
 
-const url = `${proxyUrl}/proxy?targetUrl=` + demo;
+const url = `${proxyUrl}/proxy?targetUrl=` + demoPage;
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';
@@ -78,6 +80,7 @@ const onLoadHandler = async () => {
     sendMessage(styleMessage)
     sendMessage(scriptMessage)
 }
+
 </script>
 
 <template>

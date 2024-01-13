@@ -1,5 +1,9 @@
 <script setup>
 import DemoWrapper from './DemoWrapper.vue';
+import adminSettings from '../adminSettings';
+const {proxyServerUrl, devProxyServerUrl} = adminSettings;
+
+const proxyUrl = proxyServerUrl;
 
 const props = defineProps({
     src: {
@@ -12,7 +16,7 @@ const props = defineProps({
     }
 });
 
-const url = 'https://wm-proxy.vercel.app/proxy?targetUrl=' + props.src;
+const url = proxyUrl + '/proxy?targetUrl=' + props.src;
 </script>
 
 <template>

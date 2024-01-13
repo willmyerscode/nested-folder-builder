@@ -40,7 +40,11 @@ const filteredFields = computed(() => {
     Object.entries(props.settings).forEach(([groupName, group]) => {
         Object.entries(group.fields).forEach(([fieldKey, fieldData]) => {
             if (checkCondition(fieldData.condition, props.settings)) {
-                if (!result[groupName]) result[groupName] = { title: group.title, fields: {} };
+                if (!result[groupName]) result[groupName] = { 
+                    title: group.title, 
+                    description: group.description,
+                    fields: {}, 
+                };
                 result[groupName].fields[fieldKey] = fieldData; 
             }
         });
@@ -63,7 +67,6 @@ const checkCondition = (condition, settings) => {
         default: return true; 
     }
 }
-
 
 </script>
 

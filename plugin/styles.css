@@ -6,6 +6,7 @@
   --folder-shadow-offset-x: 2px;
   --folder-shadow-offset-y: 2px;
   --folder-shadow-blur: 5px;
+  --folder-shadow-spread: 0px;
   --folder-shadow-opacity: 0.25;
 
   --mobile-nested-item-size: -1vmin;
@@ -45,9 +46,9 @@
 /*All Desktop Folders*/
 #header .header-nav-folder-content {
   padding: 0.5em 0em;
-  box-shadow: var(--folder-shadow-offset-x, 0px) 
-    var(--folder-shadow-offset-y, 0px)
-    var(--folder-shadow-blur, 0px)
+  box-shadow: var(--folder-shadow-offset-x, 2px) 
+    var(--folder-shadow-offset-y, 2px)
+    var(--folder-shadow-blur, 5px)
     var(--folder-shadow-spread, 0px)
     hsla(0, 0%, 0%, var(--folder-shadow-opacity, 0%))
   ;

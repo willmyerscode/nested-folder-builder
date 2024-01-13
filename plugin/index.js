@@ -9,12 +9,10 @@ class NestedFolders {
   }
 
   init() {
-    console.log(this.nestedFolders)
     this.getNestedItems();
     this.buildNestedFolders();
     this.addAccordionClickEvent();
     this.addAccessibility();
-    //this.setDesktopFolderClickthrough();
     
     for (let item in this.nestedFolders) {
       let data = this.nestedFolders[item];
