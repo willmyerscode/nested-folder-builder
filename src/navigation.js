@@ -12,6 +12,16 @@ const navigation = {
     {
       title: "Advanced",
       page: "https://www.will-myers.com/nested-folders/advanced",
+      subpages: [
+        {
+          title: "Clickable Nested Titles",
+          scrollTo: "#clickable-links", // should be a selector
+        },
+        {
+          title: "Self Hosting",
+          scrollTo: "#self-hosting"
+        },
+      ],
     },
     {
       title: "Support",

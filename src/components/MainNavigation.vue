@@ -12,15 +12,14 @@ const props = defineProps({
 
 const emit = defineEmits(['design-click', 'page-selected', 'toggleNav'])
 
-const buttonClicked = async (page, id) => {
-    emit('page-selected', page);
+const buttonClicked = async (page, scrollTo) => {
+
+    emit('page-selected', page, scrollTo);
 }
 
 const handleClick = () => {
-  emit('toggleNav');
+    emit('toggleNav');
 }
-
-
 </script>
 
 <template>
@@ -40,35 +39,67 @@ const handleClick = () => {
                 </button>
             </div>
         </div>
-        <div v-for="item in navigation.items">
-            <p class="link" @click="buttonClicked(item.page, '')" :class="{'link': true, 'active': item.page === activePage}" >
-                <a>{{ item.title }}</a>
-            </p>
+        <div class="navigation-groups">
+            <ul v-for="item in navigation.items" class="navigation-group">
+                <li :class="{ 'page-item': true, 'active': item.page === activePage }">
+                    <a @click="buttonClicked(item.page, '')">{{ item.title }}</a>
+                    <ul v-if="item.subpages">
+                        <li v-for="subItem in item.subpages" class="subpage-item">
+                            <a @click="buttonClicked(item.page, subItem.scrollTo)">{{ subItem.title }}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
 <style scoped>
-p {
-    margin: 0;
+.navigation-groups{
+    display:grid;
+    gap:17px;
 }
-
-#installation-app p.link {
+/* Reset */
+ul {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+li.page-item {
     color: white;
     font-size: 18px;
     font-weight: 400;
     line-height: 26px;
     letter-spacing: 1px;
-    margin-bottom: 17px;
 }
 
-p.link a {
-    color: #ccc;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 26px;
-    letter-spacing: 1px;
+li.page-item.active {
+    color: var(--blue);
 }
+
+li.subpage-item {
+    font-weight: 400;
+    font-size: 18px;
+    color: #ccc;
+
+}
+li.subpage-item:not(:last-child) {
+    padding-bottom: 8px;
+}
+
+li > ul {
+    padding-left: 17px;
+    margin: 8px 0;
+}
+
+
+
+
+p {
+    margin: 0;
+}
+
+
 p.link a:hover {
     color: white;
 }
@@ -92,6 +123,7 @@ p.link a:hover {
     justify-content: space-between;
     margin-bottom: 4rem;
 }
+
 .toggle-menu {
     display: flex;
     justify-content: flex-end;

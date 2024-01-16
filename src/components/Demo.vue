@@ -5,8 +5,15 @@ import adminSettings from '../adminSettings';
 
 const {proxyServerUrl, devProxyServerUrl} = adminSettings;
 const { demoPage, pluginStyles, pluginScript } = pluginUrls;
+const props = defineProps({
+    fields: {
+        type: Object,
+        required: true,
+    }
+});
 
 const proxyUrl = proxyServerUrl;
+const url = `${proxyUrl}/proxy?targetUrl=` + demoPage;
 
 let pluginScriptUrl = pluginScript + '?t=' + new Date().getTime();
 let pluginStylesUrl = pluginStyles+ '?t=' + new Date().getTime();
@@ -15,15 +22,6 @@ let pluginStylesUrl = pluginStyles+ '?t=' + new Date().getTime();
 //     pluginScriptUrl = window.location.protocol + '//' + window.location.host + '/plugin/index.js'; // Update this to the correct path
 //     pluginStylesUrl = window.location.protocol + '//' + window.location.host + '/plugin/styles.css'; // Update this to the correct path
 // }
-
-const props = defineProps({
-    fields: {
-        type: Object,
-        required: true,
-    }
-});
-
-const url = `${proxyUrl}/proxy?targetUrl=` + demoPage;
 
 const stylesWithChanges = computed(() => {
     let str = '#header {';

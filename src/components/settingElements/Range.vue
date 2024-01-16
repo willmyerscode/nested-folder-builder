@@ -1,16 +1,31 @@
 <script setup>
+import tippy from 'tippy.js';
+import { onMounted } from 'vue';
+import Tippy from '../Tippy.vue'
+
+
 const props = defineProps({
     item: {
         type: Object,
         required: true,
     }
 })
+
+onMounted(() => {
+    tippy('[data-tippy-content]');
+})
 </script>
 
 <template>
     <div class="field-range">
-        <div class="label"><label>{{ item.title }}</label><span>{{ item.value }}{{ item.unit }}</span></div>
-        <input :id="item.id" type="range" :name="item.id" :value="item.value" v-model="item.value" :step="item.step" :min="item.min" :max="item.max">
+        <div class="label">
+            <label>{{ item.title }} <Tippy v-if="item.tippy" :data-tippy-content="item.tippy" />
+            </label>
+            <span>{{ item.value }}{{ item.unit }}</span>
+        </div>
+
+        <input :id="item.id" type="range" :name="item.id" :value="item.value" v-model="item.value" :step="item.step"
+            :min="item.min" :max="item.max">
     </div>
 </template>
 
@@ -24,13 +39,15 @@ const props = defineProps({
 }
 
 .label {
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
+
 .label label {
     flex-grow: 1;
 }
+
 .label span {
     font-size: 0.8rem;
 }
@@ -46,6 +63,7 @@ const props = defineProps({
     color: #fff;
     box-sizing: border-box
 }
+
 input::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 8px;
@@ -70,12 +88,11 @@ input[orient=vertical] {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%) rotate(-90deg);
+    transform: translate(-50%, -50%) rotate(-90deg);
     width: calc(1.5 * var(--space-lg));
     height: 2px
 }
 
 input[orient=vertical]::-webkit-slider-thumb {
     cursor: ns-resize
-}
-</style>
+}</style>

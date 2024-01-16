@@ -5,8 +5,10 @@ import MainNavigation from './components/MainNavigation.vue'
 import View from './components/View.vue'
 import data from './data.js'
 import navigation from './navigation.js'
+import adminSettings from './adminSettings';
 import { ref, computed, watch, onMounted, nextTick } from "vue";
 
+const { proxyServerUrl, devProxyServerUrl } = adminSettings;
 const settings = ref(data);
 
 const fields = computed(() => {
@@ -29,15 +31,38 @@ watch(settings, () => {
 
 const initialPage = navigation.items[0].page
 const activePage = ref(initialPage);
-const currentPage = ref(initialPage)
-const changePage = (page) => {
+const currentPage = ref(initialPage);
+const changePage = (page, scrollTo) => {
   activePage.value = page;
   changeCurrent(page);
+  if (scrollTo) {
+    const message = {
+      type: 'eval',
+      script: `
+      function scrollToElement(selector) { 
+        const element = document.querySelector(selector);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          console.error('Element not found:', selector);
+        }
+      }
+      scrollToElement('${scrollTo}') 
+      `,
+    };
+    sendMessage(message, page);
+  }
 }
 const changeCurrent = (page) => {
   if (page !== 'design') {
     currentPage.value = page;
   }
+}
+const sendMessage = (message, page) => {
+  const proxyUrl = proxyServerUrl;
+  const url = `${proxyUrl}/proxy?targetUrl=` + page;
+  const iframe = document.querySelector('iframe').contentWindow;
+  iframe.postMessage(message, url);
 }
 
 
@@ -48,7 +73,7 @@ const toggleNav = () => {
 }
 
 const pagesToRender = computed(() => {
-  const allPages = navigation.items.map(item => item.page);  
+  const allPages = navigation.items.map(item => item.page);
   const uniquePages = [...new Set(allPages.filter(page => page === activePage.value))];
   return uniquePages;
 });
@@ -60,8 +85,11 @@ const pagesToRender = computed(() => {
   <div class="installation-wrapper" data-view="main">
     <div :class="{ 'side-navigation': true, 'expanded': navExpanded == true }">
       <div class="side-navigation-wrapper">
-        <MainNavigation :class="{ 'navigation': true, 'active': activePage !== 'design' }" @page-selected="changePage" :navigation="navigation" :activePage="activePage" @toggleNav="toggleNav"/>
-        <Settings :class="{ 'settings': true, 'navigation': true, 'active': activePage == 'design' }" :settings="settings" :currentPage="currentPage" :fields="fields" @page-selected="changePage" @toggleNav="toggleNav"/>
+        <MainNavigation :class="{ 'navigation': true, 'active': activePage !== 'design' }"
+          @page-selected="(page, scrollTo) => changePage(page, scrollTo)" :navigation="navigation"
+          :activePage="activePage" @toggleNav="toggleNav" />
+        <Settings :class="{ 'settings': true, 'navigation': true, 'active': activePage == 'design' }" :settings="settings"
+          :currentPage="currentPage" :fields="fields" @page-selected="changePage" @toggleNav="toggleNav" />
       </div>
     </div>
     <div class="main">
@@ -78,27 +106,31 @@ const pagesToRender = computed(() => {
 #installation-app {
   max-height: 100vh;
 }
+
 .side-navigation-wrapper * {
-  min-width:0;
+  min-width: 0;
 }
-.installation-wrapper .side-navigation-wrapper .navigation{
+
+.installation-wrapper .side-navigation-wrapper .navigation {
   transition: transform 0.3s ease;
   will-change: transform;
 }
-.installation-wrapper .side-navigation-wrapper:has( > .settings.active) .navigation  {
+
+.installation-wrapper .side-navigation-wrapper:has(> .settings.active) .navigation {
   transform: translateX(-400px);
   opacity: 1;
 }
 
-.fluid-engine .sqs-block{
+.fluid-engine .sqs-block {
   box-sizing: border-box;
 }
 
 .side-navigation.expanded .toggle-menu .open {
-  display:none;
+  display: none;
 }
+
 .side-navigation:not(.expanded) .toggle-menu .close {
-  display:none;
+  display: none;
 }
 </style>
 
@@ -116,13 +148,14 @@ const pagesToRender = computed(() => {
   overflow-x: hidden;
   transition: margin 0.2s ease;
 }
-.main-wrapper{
+
+.main-wrapper {
   display: flex;
 }
 
 .view {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   max-height: 100vh;
   overflow-y: auto;
   align-items: stretch;
@@ -144,6 +177,7 @@ const pagesToRender = computed(() => {
   transform: translateX(-328px);
   transition: transform 0.2s ease;
 }
+
 .side-navigation-wrapper {
   display: flex;
   transition: opacity 0.2s ease;
@@ -163,13 +197,15 @@ const pagesToRender = computed(() => {
 .side-navigation:not(.expanded) .settings-wrapper * {
   opacity: 0;
 }
+
 .side-navigation.expanded {
   transform: translateX(0px);
 }
-.side-navigation.expanded + .main {
+
+.side-navigation.expanded+.main {
   margin-left: 400px;
 }
-.side-navigation:not(.expanded) + .main {
+
+.side-navigation:not(.expanded)+.main {
   margin-left: 72px;
-}
-</style>
+}</style>

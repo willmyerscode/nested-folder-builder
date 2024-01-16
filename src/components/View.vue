@@ -22,12 +22,9 @@ const url = proxyUrl + '/proxy?targetUrl=' + props.src;
 <template>
     <div>
         <div>
-            <!--<div v-if="src !== 'design' && !isLoading && !error" v-html="content" id="sections" class="sections"></div>-->
             <iframe v-if="src !== 'design'" :src="url"></iframe>
             <DemoWrapper v-else :fields="fields"/>
         </div>
-        <!-- <div v-if="src !== 'design'" class="loading">Loading...</div> -->
-        <!-- <div v-if="error">{{ error }}</div> -->
     </div>
 </template>
 
